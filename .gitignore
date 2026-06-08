@@ -1,0 +1,9 @@
+﻿# data artifacts — reproducible via kaggle download, never commit
+data/
+# python
+.venv/
+__pycache__/
+*.pyc
+# secrets
+.env
+.env.*
