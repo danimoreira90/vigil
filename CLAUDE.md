@@ -233,3 +233,4 @@ When uncertain:
 - ADRs: `docs/adr/`
 - Tech debt: `docs/tech-debt.md`
 - Model cards: `docs/model-cards/`
+- Code simplicity (binding): `CODE-SIMPLICITY.md`
