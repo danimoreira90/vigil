@@ -1,5 +1,5 @@
 ﻿# data artifacts — reproducible via kaggle download, never commit
-data/
+/data/
 # python
 .venv/
 __pycache__/
