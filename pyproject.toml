@@ -4,11 +4,24 @@ version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = []
 
+# System 2 (cognitive / RAG) runtime — ADR-002. Off the AP-1 scorer path on purpose:
+# never added to core `dependencies` so the < 200 ms scorer stays lean (HR-7).
+# Install with: uv sync --extra system2
+[project.optional-dependencies]
+system2 = [
+    "sentence-transformers>=3.0",
+    "chromadb>=0.5",
+    "rank-bm25>=0.2",
+]
+
 [dependency-groups]
 dev = [
     "kaggle>=2.2.1",
     "pandas>=3.0.3",
     "pytest>=9.0.3",
+    "ipykernel>=6.29",
+    "jupyter>=1.1",
+    "nbclient>=0.10",
 ]
 
 [tool.pytest.ini_options]

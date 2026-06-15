@@ -59,3 +59,27 @@ Author a small **gold query set** (~15–20 queries, each mapped to the chunk(s)
 ## Changelog
 
 - **2026-06-14** — Initial draft. Embedding model, vector store, retrieval strategy, eval plan.
+
+## Update — 2026-06-14 (post-c03 eval)
+
+The c03 retrieval eval (18-query gold set; recall@k + MRR) measured the choices above:
+
+- recall@5 saturates at 0.944 (17/18) for BGE-dense, MiniLM-dense, and both hybrids;
+  BM25 alone 0.889. The discriminator is ranking quality, not recall.
+- **Hybrid MiniLM + BM25 (RRF) won** on ranking (recall@1 0.889, MRR@5 0.917) and showed
+  a cleaner out-of-domain score collapse (MiniLM in-vs-OOD cosine ratio ~7.3x vs BGE ~1.4x),
+  which gives c05 a usable refuse-to-answer threshold.
+
+**Decision change:** ship **hybrid MiniLM + BM25**, not BGE-small. The "BGE generally tops
+MiniLM" line above was the recorded prior; on this corpus's lexical+semantic mix it did not
+hold. MiniLM is also the smaller/faster model, so the choice is dominant — at worst tied on
+recall, better on ranking, leaner to run. The original prediction is left intact above as the
+prior; this block is the empirical correction.
+
+**Carried to c05:**
+- Single recurring miss ("velocity_high" terse glossary def, lost to richer typology sections)
+  is a corpus-shape issue — fix by prepending H1+H2 to glossary chunk text at embed time.
+- The OOD advantage rests on one probe here; validate the cosine cutoff against several
+  out-of-domain queries before committing to it in c05.
+
+**EDD floor** raised to recall@5 >= 0.90 (just under measured 0.944; requires holding 17/18).
