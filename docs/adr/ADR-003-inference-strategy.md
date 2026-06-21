@@ -76,3 +76,26 @@ Local engine: `gpt4all` (Python SDK, GPU via CUDA). Cloud comparison: `openai` (
 
 - **2026-06-14** — Initial draft. Ship-local decision, cloud-as-comparison, swappable seam, three open questions.
 - **2026-06-14** — Accepted. Engine GPT4All; local model 7–8B Q4 on RTX 3070; cloud comparison via OpenAI cheap tier (HF free tier fallback).
+
+## Update — 2026-06-20 (post-c02: local engine switched to Ollama)
+
+c04 shipped and measured GPT4All as the local engine (committed notebook: local GPT4All vs
+cloud gpt-5.4-nano — competency #4, unchanged and still the recorded comparison). Building c02
+surfaced a hardware limit GPT4All cannot clear on this host:
+
+- GPT4All's CUDA backend fails to load (error 0x7e — missing runtime DLLs).
+- GPT4All's Vulkan path (device='gpu') works but is too slow for long generations: ~70 s/call on
+  short probes, and chain-of-thought / RAG-length prompts push a single 3-call cell past 600 s.
+  A full c02 grid would run 1-2 h; c05's retrieved-context prompts would be worse.
+
+**Decision change:** the production local engine for System 2 generation is now Ollama
+(`llama3.1:8b`, same Llama-3.1-8B family as the c04 GGUF), using the RTX 3070 via proper CUDA.
+Measured: warm ~300 ms/call, cold start ~22 s (one-time VRAM load). It stays fully local and
+private — nothing leaves the host (HR-3 intact) — and the rubric permits a "servidor compatível".
+Ollama exposes an OpenAI-compatible endpoint, so local.py drives it with the `openai` client
+already in deps; the generate() seam, Disposition schema, json_repair, and prompt.py are all
+unchanged. A backend swap, not a redesign.
+
+**What stays GPT4All:** the committed c04 notebook is the recorded competency-#4 artifact and is
+not re-run. `gpt4all` remains in the system2 extra and selectable via VIGIL_LOCAL_ENGINE=gpt4all,
+so c04 reproduces as recorded; the default (ollama) is what c02/c05 use.
