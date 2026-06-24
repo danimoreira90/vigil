@@ -7,3 +7,5 @@ __pycache__/
 # secrets
 .env
 .env.*
+
+.ipynb_checkpoints/
