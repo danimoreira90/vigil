@@ -17,6 +17,20 @@ system2 = [
     "pydantic>=2.8",
 ]
 
+# c01 — encoder-vs-decoder typology classification (competency #1). Offline
+# analysis/benchmark component, NOT the AP-1 scorer path and NOT a System 2 RAG
+# runtime dep: kept in its own extra so neither boundary is crossed. transformers
+# and torch resolve transitively via system2's sentence-transformers, but
+# classify/ imports them directly so they are declared (CS-13). sentencepiece is
+# the one genuinely-new dep — the DeBERTa-v3 tokenizer needs it. Dev/tooling tier
+# (off the latency path), so diff review only, no ADR (CS-13). Install with:
+# uv sync --extra c01
+c01 = [
+    "transformers>=4.44",
+    "torch>=2.2",
+    "sentencepiece>=0.2",
+]
+
 [dependency-groups]
 dev = [
     "kaggle>=2.2.1",
