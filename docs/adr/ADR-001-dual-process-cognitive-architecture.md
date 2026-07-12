@@ -3,7 +3,6 @@
 **Status:** Accepted
 **Date:** 2026-06-11
 **Deciders:** Daniel Moreira
-**Related:** `CLAUDE.md` (HR-3/4/5/7, AP-1..4), `CONTEXT.md`, `CODE-SIMPLICITY.md`
 
 ---
 
@@ -69,6 +68,6 @@ Latency (HR-7), explainability / regulatory (HR-5), privacy (HR-3), cold start, 
 
 ## Follow-ups
 
-- C4 L1/L2 diagrams for the two processes (per `CLAUDE.md`).
+- C4 L1/L2 diagrams for the two processes 
 - **ADR-002:** embedding model + vector store choice (real trade-off â†’ its own ADR).
 - **ADR-003:** local vs cloud inference for System 2 (privacy / cost / latency trade-off).

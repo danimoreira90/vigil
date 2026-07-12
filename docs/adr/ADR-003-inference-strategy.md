@@ -63,7 +63,7 @@ Local engine: `gpt4all` (Python SDK, GPU via CUDA). Cloud comparison: `openai` (
 ## Resolved parameters (2026-06-14)
 
 1. **Local engine — GPT4All** (rubric-named, SDK-simple, no server).
-2. **Hardware — RTX 3070 (8 GB VRAM)** → a 7–8B Q4 instruct model fits with GPU offload; the c04 agent picks the current best-for-JSON GGUF from GPT4All's catalog at build time. CPU fallback acceptable — System 2 is async, off LAT-1.
+2. **Hardware — RTX 3070 (8 GB VRAM)** → a 7–8B Q4 instruct model fits with GPU offload; the best-for-JSON GGUF is selected from GPT4All's catalog at build time. CPU fallback acceptable — System 2 is async, off LAT-1.
 3. **Cloud comparison — OpenAI cheapest small tier** (real paired calls on synthetic cases, ~cents; cleanest evidence for #4). No-billing fallback: HF Inference free tier. Switch to local-only-documented only if Daniel declines a key — weaker on #4's *compare* item but valid.
 
 ## Follow-ups
