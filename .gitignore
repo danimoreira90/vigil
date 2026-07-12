@@ -9,3 +9,10 @@ __pycache__/
 .env.*
 
 .ipynb_checkpoints/
+
+.claude/
+CLAUDE.md
+CODE-SIMPLICITY.md
+CONTEXT.md
+*.bak-before-imports
+notes_scratch.txt
