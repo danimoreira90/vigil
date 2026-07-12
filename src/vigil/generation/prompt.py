@@ -153,6 +153,7 @@ def build_disposition_prompt(
     *,
     use_fewshot: bool = False,
     use_reasoning: bool = False,
+    reference_block: str | None = None,
 ) -> str:
     parts: list[str] = [role_part(), schema_part()]
     if use_fewshot:
@@ -160,6 +161,11 @@ def build_disposition_prompt(
         parts.append(fewshot_part())
     if use_reasoning:
         parts.append(reasoning_part())
+    # c05 RAG seam: a TRUSTED reference block sits here — after the reasoning
+    # scaffold, immediately BEFORE and OUTSIDE the BEGIN CASE (untrusted) fence.
+    # Default None keeps c02 output byte-identical (baseline arm == c02 T3).
+    if reference_block is not None:
+        parts.append(reference_block)
     parts.append("Now disposition the following Case.")
     parts.append(case_part(case_body))
     return "\n\n".join(parts)
